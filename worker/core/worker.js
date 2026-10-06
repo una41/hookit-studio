@@ -1,7 +1,7 @@
 import { db } from './db.js';
 import { digest } from './security.js';
 import { accountToken, graph, buttonMessage, MetaError } from './instagram.js';
-import { automationSchema, matchesComment } from './schema.js';
+import { automationSchema, matchesComment, selectCommentReply } from './schema.js';
 function messageFailure(error) {
     return {
         status: error instanceof MetaError && error.uncertain ? 'unknown' : 'failed',
@@ -148,7 +148,9 @@ async function processComment(event, account) {
     try {
         if (!(await stillActive(workspaceId, account.id, campaign.id)))
             return;
-        const reply = await graph(`${commentId}/replies`, account.token, {}, { message: campaign.commentReply });
+        const replyText = selectCommentReply(campaign);
+        await delivery.update({ replyText });
+        const reply = await graph(`${commentId}/replies`, account.token, {}, { message: replyText });
         await delivery.update({ replySent: true, replyId: reply.id || null });
     }
     catch {

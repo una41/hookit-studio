@@ -28,6 +28,7 @@ export interface Automation {
   deliveryMessage: string;
   links: LinkButton[];
   commentReply: string;
+  commentReplies?: string[];
   createdAt: string;
   updatedAt: string;
 }

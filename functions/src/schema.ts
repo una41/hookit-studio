@@ -36,6 +36,7 @@ export const automationSchema = z
       .min(1)
       .max(2),
     commentReply: text(500),
+    commentReplies: z.array(text(500)).min(1).max(5).optional(),
     createdAt: z.string().datetime(),
     updatedAt: z.string().datetime(),
   })
@@ -52,7 +53,7 @@ export const automationSchema = z
         value.followMessage,
         value.recheckButton,
         value.deliveryMessage,
-        value.commentReply,
+        ...(value.commentReplies ?? [value.commentReply]),
       ].some((v) => !v.trim())
     )
       ctx.addIssue({ code: 'custom', message: '필수 문구를 입력해 주세요.' });
@@ -75,4 +76,18 @@ export function matchesComment(automation: Automation, comment: string) {
   return automation.keywords.some((k) =>
     automation.match === 'exact' ? normalize(k) === text : text.includes(normalize(k)),
   );
+}
+
+export function selectCommentReply(
+  campaign: Pick<Automation, 'commentReply' | 'commentReplies'>,
+  random = Math.random,
+): string {
+  const replies = campaign.commentReplies ?? [campaign.commentReply];
+  if (
+    !replies.length ||
+    replies.length > 5 ||
+    replies.some((text) => !text.trim() || text.length > 500)
+  )
+    throw new Error('Invalid comment replies');
+  return replies[Math.floor(random() * replies.length)];
 }

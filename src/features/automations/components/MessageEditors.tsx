@@ -60,20 +60,51 @@ export function FollowPromptEditor({ value, onChange }: Props) {
   );
 }
 export function CommentReplyEditor({ value, onChange }: Props) {
+  const replies = value.commentReplies ?? [value.commentReply];
+  function update(replies: string[]) {
+    onChange({ commentReplies: replies, commentReply: replies[0] || '' });
+  }
   return (
     <>
-      <Field label="자동 대댓글 문구" required>
-        {(id) => (
-          <textarea
-            id={id}
-            rows={3}
-            maxLength={500}
-            value={value.commentReply}
-            onChange={(e) => onChange({ commentReply: e.target.value })}
-          />
-        )}
-      </Field>
-      <p className="inline-note">첫 DM 발송이 성공한 경우에만 원래 댓글에 답글을 남겨요.</p>
+      {replies.map((reply, index) => (
+        <div key={index}>
+          <Field label={`자동 대댓글 문구 ${index + 1}`} required>
+            {(id) => (
+              <textarea
+                id={id}
+                rows={3}
+                maxLength={500}
+                value={reply}
+                onChange={(e) =>
+                  update(replies.map((text, i) => (i === index ? e.target.value : text)))
+                }
+              />
+            )}
+          </Field>
+          {replies.length > 1 && (
+            <button
+              type="button"
+              className="button button-secondary"
+              aria-label={`대댓글 문구 ${index + 1} 삭제`}
+              onClick={() => update(replies.filter((_, i) => i !== index))}
+            >
+              삭제
+            </button>
+          )}
+        </div>
+      ))}
+      <button
+        type="button"
+        className="button button-secondary"
+        disabled={replies.length >= 5}
+        onClick={() => update([...replies, ''])}
+      >
+        문구 추가 ({replies.length}/5)
+      </button>
+      <p className="inline-note">
+        첫 DM 발송 성공 후 등록한 문구 중 하나를 무작위로 골라 대댓글을 남겨요. 같은 문구가 연속
+        선택될 수 있어요.
+      </p>
     </>
   );
 }

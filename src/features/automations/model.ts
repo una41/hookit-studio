@@ -32,6 +32,10 @@ export function isSafeUrl(value: string) {
 }
 export function validateAutomation(value: Automation, status: AutomationStatus): string[] {
   const errors: string[] = [];
+  const replies = value.commentReplies ?? [value.commentReply];
+  if (replies.length < 1 || replies.length > 5) errors.push('대댓글 문구는 1~5개 등록해 주세요.');
+  if (replies.some((text) => text.length > 500))
+    errors.push('대댓글 문구는 각각 500자 이내로 입력해 주세요.');
   if (!value.name.trim()) errors.push('자동화 이름을 입력해 주세요.');
   if (value.name.length > 80) errors.push('자동화 이름은 80자 이내로 입력해 주세요.');
   if (value.keywords.length > 30) errors.push('키워드는 최대 30개까지 등록할 수 있어요.');
@@ -60,7 +64,7 @@ export function validateAutomation(value: Automation, status: AutomationStatus):
     value.followMessage,
     value.recheckButton,
     value.deliveryMessage,
-    value.commentReply,
+    ...replies,
   ];
   if (required.some((text) => !text.trim()))
     errors.push('메시지와 버튼 문구를 모두 입력해 주세요.');

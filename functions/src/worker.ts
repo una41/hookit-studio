@@ -2,7 +2,7 @@ import type { DocumentReference, DocumentData } from 'firebase-admin/firestore';
 import { db } from './db';
 import { digest } from './security';
 import { accountToken, graph, buttonMessage, MetaError } from './instagram';
-import { automationSchema, matchesComment, type Automation } from './schema';
+import { automationSchema, matchesComment, selectCommentReply, type Automation } from './schema';
 
 type Account = Awaited<ReturnType<typeof accountToken>>;
 type QueueEvent = {
@@ -170,11 +170,13 @@ async function processComment(event: QueueEvent, account: Account) {
   // The public reply is independent; its failure must never resend the private DM.
   try {
     if (!(await stillActive(workspaceId, account.id, campaign.id))) return;
+    const replyText = selectCommentReply(campaign);
+    await delivery.update({ replyText });
     const reply = await graph<{ id: string }>(
       `${commentId}/replies`,
       account.token,
       {},
-      { message: campaign.commentReply },
+      { message: replyText },
     );
     await delivery.update({ replySent: true, replyId: reply.id || null });
   } catch {
