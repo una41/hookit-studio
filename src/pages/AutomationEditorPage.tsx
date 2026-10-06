@@ -145,7 +145,21 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
                 />
               )}
             </Field>
-            <PostSelector value={value.post} onChange={(post) => update({ post })} />
+            <PostSelector
+              value={value.post}
+              onChange={(post) => {
+                if (value.post?.id === post.id) return;
+                const defaults = newAutomation();
+                update({
+                  ...defaults,
+                  id: value.id,
+                  createdAt: value.createdAt,
+                  post,
+                  name: post.title.slice(0, 60),
+                  commentReplies: [defaults.commentReply],
+                });
+              }}
+            />
           </EditorSection>
           <EditorSection
             number={2}
@@ -183,7 +197,7 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
             <CommentReplyEditor value={value} onChange={update} />
           </EditorSection>
         </div>
-        <DmPreview value={value} />
+        <DmPreview key={value.post?.id || 'no-post'} value={value} />
       </div>
       <div className="editor-bottom-actions">{saveActions}</div>
       {blocker.state === 'blocked' && (
