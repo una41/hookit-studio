@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import {
   ChevronLeft,
   Phone,
@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import type { Automation } from '../../../types';
 import { useWorkspace } from '../../workspace/WorkspaceProvider';
-export function DmPreview({ value }: { value: Automation }) {
+export function DmPreview({ value, actions }: { value: Automation; actions?: ReactNode }) {
   const { data } = useWorkspace();
   const [follower, setFollower] = useState(true);
   const [step, setStep] = useState(1);
@@ -32,6 +32,7 @@ export function DmPreview({ value }: { value: Automation }) {
   }, [follower, step]);
   return (
     <aside className="preview-column">
+      <div className="preview-save-actions">{actions}</div>
       <div className="preview-title">
         <span>DM 미리보기</span>
         <button onClick={() => setStep(0)} className="icon-button" aria-label="미리보기 처음으로">

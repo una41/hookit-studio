@@ -96,7 +96,7 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
           </div>
           <p>댓글부터 자료 전달까지, 나만의 흐름을 만들어 보세요.</p>
         </div>
-        {saveActions}
+        <div className="editor-mobile-actions">{saveActions}</div>
       </div>
       <div className="editor-mobile-tabs">
         <button
@@ -197,9 +197,8 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
             <CommentReplyEditor value={value} onChange={update} />
           </EditorSection>
         </div>
-        <DmPreview key={value.post?.id || 'no-post'} value={value} />
+        <DmPreview key={value.post?.id || 'no-post'} value={value} actions={saveActions} />
       </div>
-      <div className="editor-bottom-actions">{saveActions}</div>
       {blocker.state === 'blocked' && (
         <Modal title="변경 사항을 저장하지 않았어요" onClose={() => blocker.reset()}>
           <p className="modal-description">지금 이동하면 저장하지 않은 설정은 사라져요.</p>
