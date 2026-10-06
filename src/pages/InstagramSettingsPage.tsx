@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Instagram,
   ArrowUpRight,
@@ -119,6 +119,11 @@ export function InstagramSettingsPage() {
                 </div>
               </div>
               <div className="settings-actions">
+                {data.account.status === 'connected' && (
+                  <Link className="button button-primary" to="/posts">
+                    게시물 불러와 설정하기
+                  </Link>
+                )}
                 <Button variant="secondary" onClick={() => void connect()} loading={busy}>
                   <RefreshCw size={16} />
                   다시 연결

@@ -13,15 +13,18 @@
     "format": "prettier --write src server functions/src vite.config.ts vitest.config.ts",
     "format:check": "prettier --check src server functions/src vite.config.ts vitest.config.ts",
     "deploy:spark": "npm run build && firebase deploy --only \"firestore:rules,firestore:indexes,hosting\"",
-    "deploy:cloudflare": "npm run build && wrangler deploy",
-    "test:worker": "node --test worker/index.test.js"
+    "deploy:cloudflare": "npm run build:worker && npm run build && wrangler deploy",
+    "test:worker": "node --test worker/index.test.js worker/db.test.js",
+    "build:worker": "node scripts/build-worker.mjs"
   },
   "dependencies": {
+    "express": "^5.2.1",
     "firebase": "^12.19.0",
     "lucide-react": "^0.468.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.0.0"
+    "react-router-dom": "^7.0.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

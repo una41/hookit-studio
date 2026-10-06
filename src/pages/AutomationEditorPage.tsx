@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { ArrowLeft, Save, Play, Pause, AlertCircle } from 'lucide-react';
 import { useWorkspace } from '../features/workspace/WorkspaceProvider';
@@ -18,11 +18,16 @@ import { Field } from '../components/ui/Field';
 import { Button } from '../components/ui/Button';
 import { Modal } from '../components/ui/Modal';
 import { StatusBadge } from '../components/ui/Badge';
-import type { Automation } from '../types';
+import type { Automation, Post } from '../types';
 export function AutomationEditorPage() {
   const { id } = useParams();
   const { data } = useWorkspace();
-  const [empty] = useState(newAutomation);
+  const location = useLocation();
+  const [empty] = useState(() => {
+    const draft = newAutomation();
+    const post = (location.state as { post?: Post } | null)?.post;
+    return post ? { ...draft, post, name: post.title.slice(0, 60) } : draft;
+  });
   const initial = id ? data.automations.find((a) => a.id === id) : empty;
   if (!initial)
     return (

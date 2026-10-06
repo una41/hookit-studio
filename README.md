@@ -6,6 +6,10 @@
 
 현재 단계는 **React 웹 프로젝트와 Firebase 서버 초안 구현**이다. 아래 기획 내용은 목표 사양이며 모두 운영 검증이 끝났다는 뜻은 아니다. 실제 Meta 계정 연결·발송 검증은 아직 진행하지 않았다.
 
+## 계정 연결과 게시물 설정
+
+인스타그램 연결에서 공식 로그인 → **게시물 · 자동 DM**에서 게시물/릴스 불러오기 → 게시물 선택 → 댓글 조건과 DM 설정 순서로 사용한다. 최근 최대 50개, 검색, 썸네일, 기존 설정 상태를 표시한다. 선택한 게시물은 새 자동화 편집기에 자동 입력한다. 실제 계정 검증과 서버 Secret 설정은 아직 필요하다.
+
 ## 빠른 실행
 
 ```powershell
@@ -15,7 +19,7 @@ npm run dev
 
 `http://127.0.0.1:5173`에서 설정된 로컬 계정으로 **로그인 하기**를 누르면 6개 화면을 확인할 수 있다. Firebase가 없는 로컬 개발에서는 서버에서 아이디·비밀번호를 검증한 뒤 샘플 작업공간에 들어간다. 실제 DM은 보내지 않으며 변경한 자동화 설정은 브라우저에 저장된다. 로컬 로그인 설정은 Git에서 제외되는 `.local/auth.json`에 솔트와 해시로 저장하고 브라우저에 제공하지 않는다.
 
-프런트엔드는 **React + TypeScript + Vite**, 인증·DB는 **Firebase Authentication + Firestore**, 서버는 **Render Free Web Service**에서 실행할 수 있도록 독립 Node 서버로 이전했다. 실제 Render 배포와 Meta 실계정 검증은 아직 완료하지 않았다. [무료 서버 배포 안내](docs/RENDER.md)를 참고한다. 작은 컴포넌트·훅·서비스 모듈로 분리했다. 서비스 브랜드는 **HOOKIT STUDIO**다. 기존 미디어 프로덕션 명함의 블루(#205BFF)와 원형 심볼을 연결하되, 사이트는 화이트 배경과 블루 포인트를 기본으로 한다.
+프런트엔드는 **React + TypeScript + Vite**, 인증·DB는 **Firebase Authentication + Firestore**, 웹과 API 서버는 **Cloudflare Workers**를 사용한다. Render는 배포하지 않았다. [Cloudflare 연결 안내](docs/CLOUDFLARE.md)를 참고한다. 작은 컴포넌트·훅·서비스 모듈로 분리했다. 서비스 브랜드는 **HOOKIT STUDIO**다. 기존 미디어 프로덕션 명함의 블루(#205BFF)와 원형 심볼을 연결하되, 사이트는 화이트 배경과 블루 포인트를 기본으로 한다.
 
 실제 연동 설정, 최초 계정 준비, 현재 제한과 테스트 명령은 **[개발 및 연결 안내](docs/SETUP.md)**에 정리했다. 환경변수 예시는 [.env.example](.env.example), 서버 설정 예시는 [functions/.env.example](functions/.env.example)이다.
 

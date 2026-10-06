@@ -13,6 +13,7 @@ import { Brand } from './Brand';
 import { useWorkspace } from '../../features/workspace/WorkspaceProvider';
 const nav = [
   { to: '/dashboard', label: '대시보드', icon: LayoutDashboard },
+  { to: '/posts', label: '게시물 · 자동 DM', icon: Instagram },
   { to: '/automations', label: '자동화', icon: Zap },
   { to: '/deliveries', label: '발송 내역', icon: Send },
   { to: '/settings/instagram', label: '인스타그램 연결', icon: Instagram },

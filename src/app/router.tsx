@@ -1,3 +1,4 @@
+import { PostsPage } from '../pages/PostsPage';
 import { createBrowserRouter, Navigate, Outlet, useRouteError } from 'react-router-dom';
 import { AuthProvider, useAuth } from '../features/auth/AuthProvider';
 import { WorkspaceProvider } from '../features/workspace/WorkspaceProvider';
@@ -59,6 +60,7 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <Navigate to="/dashboard" replace /> },
           { path: '/dashboard', element: <DashboardPage /> },
+          { path: '/posts', element: <PostsPage /> },
           { path: '/automations', element: <AutomationsPage /> },
           { path: '/automations/new', element: <AutomationEditorPage /> },
           { path: '/automations/:id/edit', element: <AutomationEditorPage /> },

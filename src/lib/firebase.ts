@@ -14,4 +14,6 @@ export const isDemo =
 const app = firebaseConfigured && !isDemo ? (getApps()[0] ?? initializeApp(config)) : null;
 export const auth = app ? getAuth(app) : null;
 export const db = app ? getFirestore(app) : null;
-export const apiBase = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+export const apiBase = (
+  import.meta.env.VITE_API_URL || 'https://hookit-studio.yn8206.workers.dev/api'
+).replace(/\/$/, '');

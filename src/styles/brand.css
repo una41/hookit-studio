@@ -155,3 +155,128 @@ a:focus-visible {
 .art-star {
   color: #5379d9;
 }
+
+.post-flow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0 24px;
+  color: #63718d;
+  font-size: 12px;
+  flex-wrap: wrap;
+}
+.posts-workspace {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+.posts-list {
+  overflow: hidden;
+}
+.posts-list header {
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.posts-list .search-field {
+  margin: 0 16px 16px;
+}
+.post-list-item {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 18px;
+  border: 0;
+  border-top: 1px solid #e5ebf5;
+  background: white;
+  text-align: left;
+  align-items: center;
+}
+.post-list-item.selected {
+  background: #edf3ff;
+  box-shadow: inset 3px 0 #205bff;
+}
+.post-list-item > span {
+  min-width: 0;
+}
+.post-list-item strong {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+}
+.post-list-item small {
+  display: block;
+  margin-top: 8px;
+  color: #69758b;
+  font-size: 10px;
+}
+.posts-limit {
+  padding: 16px;
+  color: #69758b;
+  font-size: 11px;
+}
+.post-detail {
+  padding: 28px;
+}
+.post-detail-head {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  margin-bottom: 30px;
+}
+.post-detail-head h2 {
+  font-size: 18px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 200px;
+  overflow: auto;
+  margin: 12px 0;
+}
+.post-detail-head a {
+  color: #205bff;
+  font-size: 12px;
+}
+.post-detail h3 {
+  margin-bottom: 16px;
+}
+.post-campaign {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid #e2eaff;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+}
+.post-campaign > div {
+  flex: 1;
+}
+.post-campaign p {
+  font-size: 12px;
+  color: #69758b;
+}
+.post-detail > .button {
+  margin-top: 18px;
+}
+@media (max-width: 900px) {
+  .posts-workspace {
+    grid-template-columns: 1fr;
+  }
+  .posts-list {
+    max-height: 390px;
+    overflow: auto;
+  }
+}
+@media (max-width: 550px) {
+  .post-detail-head {
+    grid-template-columns: 90px minmax(0, 1fr);
+  }
+  .post-detail {
+    padding: 18px;
+  }
+}

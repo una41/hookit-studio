@@ -16,13 +16,15 @@ export function AppLayout() {
   const { data, loading, error, refresh } = useWorkspace();
   const location = useLocation();
   const notify = useToast();
-  const title = location.pathname.startsWith('/automations')
-    ? '자동화'
-    : location.pathname.startsWith('/deliveries')
-      ? '발송 내역'
-      : location.pathname.startsWith('/settings')
-        ? '인스타그램 연결'
-        : '대시보드';
+  const title = location.pathname.startsWith('/posts')
+    ? '게시물 · 자동 DM'
+    : location.pathname.startsWith('/automations')
+      ? '자동화'
+      : location.pathname.startsWith('/deliveries')
+        ? '발송 내역'
+        : location.pathname.startsWith('/settings')
+          ? '인스타그램 연결'
+          : '대시보드';
   return (
     <div className="app-shell">
       <a className="skip-link" href="#main-content">
