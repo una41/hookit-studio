@@ -1,3 +1,4 @@
+import { CreateAutomationLink } from '../features/automations/CreateAutomationLink';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Plus, Zap, MessageCircle, Send, Instagram } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
@@ -18,12 +19,12 @@ export function DashboardPage() {
         title="오늘도, 자연스럽게 연결해요"
         description="반복되는 일은 줄이고, 소중한 연결에 집중하세요."
         action={
-          <Link to="/automations/new" className="button button-primary">
+          <CreateAutomationLink className="button button-primary">
             <Plus size={17} />새 자동화 만들기
-          </Link>
+          </CreateAutomationLink>
         }
       />
-      {!data.account && (
+      {data.account?.status !== 'connected' && (
         <div className="setup-alert">
           <Instagram size={21} />
           <div>
@@ -97,10 +98,10 @@ export function DashboardPage() {
               title="첫 번째 자동화를 만들어 볼까요?"
               description="게시물을 선택하고 댓글에 답할 메시지를 준비해 주세요."
               action={
-                <Link className="button button-primary" to="/automations/new">
+                <CreateAutomationLink className="button button-primary">
                   <Plus size={16} />
                   자동화 만들기
-                </Link>
+                </CreateAutomationLink>
               }
             />
           </div>

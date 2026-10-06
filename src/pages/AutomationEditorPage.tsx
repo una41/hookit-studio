@@ -29,6 +29,17 @@ export function AutomationEditorPage() {
     return post ? { ...draft, post, name: post.title.slice(0, 60) } : draft;
   });
   const initial = id ? data.automations.find((a) => a.id === id) : empty;
+  if (!id && data.account?.status !== 'connected') {
+    return (
+      <div className="panel empty-state">
+        <h2>인스타그램을 먼저 연결해 주세요</h2>
+        <p>계정을 연결한 후 게시물을 선택해 새 자동화를 만들 수 있어요.</p>
+        <Link className="button button-primary" to="/settings/instagram">
+          인스타그램 연결하기
+        </Link>
+      </div>
+    );
+  }
   if (!initial)
     return (
       <div className="empty-state">

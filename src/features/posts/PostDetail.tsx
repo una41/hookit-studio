@@ -1,3 +1,4 @@
+import { CreateAutomationLink } from '../automations/CreateAutomationLink';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { PostArtwork } from '../../components/ui/PostArtwork';
@@ -39,9 +40,9 @@ export function PostDetail({ post, campaigns }: { post?: Post; campaigns: Automa
               아직 설정이 없어요. 댓글 조건과 첫 DM, 팔로우 안내, 전달 링크를 만들어 주세요.
             </p>
           )}
-          <Link className="button button-primary" to="/automations/new" state={{ post }}>
+          <CreateAutomationLink className="button button-primary" state={{ post }}>
             이 게시물로 자동화 만들기
-          </Link>
+          </CreateAutomationLink>
         </>
       ) : (
         <div className="empty-state">

@@ -1,5 +1,5 @@
+import { CreateAutomationLink } from '../features/automations/CreateAutomationLink';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Plus, Search } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
 import { AutomationCard } from '../features/automations/AutomationCard';
@@ -21,9 +21,9 @@ export function AutomationsPage() {
         title="나의 자동화"
         description="게시물의 작은 관심을, 의미 있는 대화로 이어보세요."
         action={
-          <Link className="button button-primary" to="/automations/new">
+          <CreateAutomationLink className="button button-primary">
             <Plus size={17} />새 자동화 만들기
-          </Link>
+          </CreateAutomationLink>
         }
       />
       <div className="list-toolbar">
@@ -62,13 +62,13 @@ export function AutomationsPage() {
           {items.map((a) => (
             <AutomationCard key={a.id} automation={a} />
           ))}
-          <Link className="new-automation-card" to="/automations/new">
+          <CreateAutomationLink className="new-automation-card">
             <span>
               <Plus size={24} />
             </span>
             <strong>새로운 연결 만들기</strong>
             <p>다음 게시물도 HOOKIT STUDIO와 함께하세요.</p>
-          </Link>
+          </CreateAutomationLink>
         </div>
       ) : (
         <div className="panel">
@@ -81,9 +81,9 @@ export function AutomationsPage() {
             }
             action={
               !data.automations.length && (
-                <Link to="/automations/new" className="button button-primary">
+                <CreateAutomationLink className="button button-primary">
                   자동화 만들기
-                </Link>
+                </CreateAutomationLink>
               )
             }
           />

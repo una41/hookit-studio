@@ -1,3 +1,4 @@
+import { CreateAutomationLink } from '../../features/automations/CreateAutomationLink';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -75,9 +76,9 @@ export function Sidebar({
               <br />
               맡겨두면 되니까요.
             </p>
-            <NavLink to="/automations/new" onClick={onClose}>
+            <CreateAutomationLink onClick={onClose}>
               새 자동화 만들기 <ArrowUpRight size={15} />
-            </NavLink>
+            </CreateAutomationLink>
           </div>
           <button className="nav-item help-button" onClick={onHelp}>
             <CircleHelp size={19} />

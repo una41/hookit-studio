@@ -139,6 +139,8 @@ app.post(
     await db.runTransaction(async (tx) => {
       const old = (await tx.get(target)).data();
       const account = (await tx.get(db.doc(`privateAccounts/${workspaceId}`))).data();
+      if (!old && (!account || account.status !== 'connected' || account.expiresAt <= Date.now()))
+        throw new HttpError(409, '인스타그램을 먼저 연결한 뒤 새 자동화를 만들어 주세요.');
       const verification = (await tx.get(db.doc(`${root}/privateConfig/automation`))).data();
       const lock = automation.post
         ? db.doc(`${root}/postLocks/${digest(automation.post.id)}`)
