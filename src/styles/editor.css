@@ -146,6 +146,10 @@
   margin-top: 23px;
 }
 .post-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-width: 0;
   position: relative;
   text-align: left;
   padding: 0;
@@ -156,13 +160,22 @@
   box-shadow: 0 0 0 1px #dbe1ee;
 }
 .post-option .post-art {
+  width: 100%;
+  flex-shrink: 0;
   height: 180px;
 }
 .post-option > span {
+  width: 100%;
+  height: 75px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow-wrap: anywhere;
   font-size: 10px;
   padding: 12px;
   line-height: 1.7;
-  display: block;
+
 }
 .post-option.post-selected {
   border-color: #8e97ad;
