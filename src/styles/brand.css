@@ -288,3 +288,6 @@ a:focus-visible {
 
 .reply-examples { margin-bottom: 16px; }
 .reply-examples .button { display: block; max-width: 100%; height: auto; white-space: normal; text-align: left; line-height: 1.5; }
+
+.editor-bottom-actions { display: flex; justify-content: flex-end; margin-top: 24px; padding: 20px 0; border-top: 1px solid #e1e7f2; }
+.editor-bottom-actions .editor-save-actions { flex-wrap: wrap; }

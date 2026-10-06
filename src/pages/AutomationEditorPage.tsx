@@ -52,6 +52,35 @@ export function AutomationEditorPage() {
 function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean }) {
   const { value, update, busy, dirty, errors, submit, blocker } = useAutomationForm(initial, isNew);
   const [mobileTab, setMobileTab] = useState('edit');
+  const saveActions = (
+    <div className="editor-save-actions">
+      <Button
+        variant="secondary"
+        loading={busy}
+        onClick={() => void submit(value.status === 'active' ? 'active' : value.status)}
+      >
+        <Save size={16} />
+        {value.status === 'draft' ? '초안 저장' : '저장'}
+      </Button>
+      <Button
+        loading={busy}
+        variant={value.status === 'active' ? 'secondary' : 'primary'}
+        onClick={() => void submit(value.status === 'active' ? 'paused' : 'active')}
+      >
+        {value.status === 'active' ? (
+          <>
+            <Pause size={16} />
+            일시정지
+          </>
+        ) : (
+          <>
+            <Play size={16} />
+            활성화
+          </>
+        )}
+      </Button>
+    </div>
+  );
   return (
     <>
       <div className="editor-heading">
@@ -67,33 +96,7 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
           </div>
           <p>댓글부터 자료 전달까지, 나만의 흐름을 만들어 보세요.</p>
         </div>
-        <div className="editor-save-actions">
-          <Button
-            variant="secondary"
-            loading={busy}
-            onClick={() => void submit(value.status === 'active' ? 'active' : value.status)}
-          >
-            <Save size={16} />
-            {value.status === 'draft' ? '초안 저장' : '저장'}
-          </Button>
-          <Button
-            loading={busy}
-            variant={value.status === 'active' ? 'secondary' : 'primary'}
-            onClick={() => void submit(value.status === 'active' ? 'paused' : 'active')}
-          >
-            {value.status === 'active' ? (
-              <>
-                <Pause size={16} />
-                일시정지
-              </>
-            ) : (
-              <>
-                <Play size={16} />
-                활성화
-              </>
-            )}
-          </Button>
-        </div>
+        {saveActions}
       </div>
       <div className="editor-mobile-tabs">
         <button
@@ -182,6 +185,7 @@ function EditorForm({ initial, isNew }: { initial: Automation; isNew: boolean })
         </div>
         <DmPreview value={value} />
       </div>
+      <div className="editor-bottom-actions">{saveActions}</div>
       {blocker.state === 'blocked' && (
         <Modal title="변경 사항을 저장하지 않았어요" onClose={() => blocker.reset()}>
           <p className="modal-description">지금 이동하면 저장하지 않은 설정은 사라져요.</p>
