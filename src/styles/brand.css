@@ -281,3 +281,7 @@ a:focus-visible {
     padding: 18px;
   }
 }
+
+.button.button-secondary {
+  margin-bottom: 5px;
+}
