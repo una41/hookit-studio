@@ -10,3 +10,7 @@ playwright-report/
 test-results/
 .local/
 *.tsbuildinfo
+
+.wrangler/
+.dev.vars
+.dev.vars.*
