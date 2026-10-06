@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: hookit-studio-api
+    runtime: node
+    plan: free
+    rootDir: functions
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node lib/standalone.js
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: GCLOUD_PROJECT
+        value: hookit-studio
+      - key: APP_ORIGIN
+        value: https://hookit-studio.web.app
+      - key: GOOGLE_APPLICATION_CREDENTIALS
+        value: /etc/secrets/hookit.json
+      - key: META_APP_ID
+        sync: false
+      - key: META_GRAPH_VERSION
+        sync: false
+      - key: META_APP_SECRET
+        sync: false
+      - key: META_WEBHOOK_VERIFY_TOKEN
+        sync: false
+      - key: TOKEN_ENCRYPTION_KEY
+        sync: false

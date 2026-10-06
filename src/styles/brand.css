@@ -1,0 +1,157 @@
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: max-content;
+  color: #205bff;
+  font-family: 'Arial Black', 'DM Sans', sans-serif;
+  font-size: 29px;
+  font-weight: 900;
+  letter-spacing: -1.5px;
+  line-height: 0.94;
+}
+.brand-word {
+  display: flex;
+  align-items: center;
+}
+.brand-ring {
+  width: 0.86em;
+  height: 0.86em;
+  margin: 0 1px;
+  flex-shrink: 0;
+}
+.brand-studio {
+  margin-top: 4px;
+  letter-spacing: -0.6px;
+}
+.brand-light {
+  color: #f8f9fc;
+}
+.button-primary {
+  color: #fff;
+  background: var(--brand-blue);
+  border-color: var(--brand-blue);
+}
+.button-primary:hover:not(:disabled) {
+  background: #1748d4;
+  border-color: #1748d4;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 3px #205bff18;
+}
+button:focus-visible,
+a:focus-visible {
+  outline-color: var(--brand-blue);
+}
+::selection {
+  background: #dce6ff;
+  color: #101114;
+}
+.nav-active {
+  background: #edf2ff !important;
+  color: #205bff;
+}
+.nav-count {
+  background: #dce6ff;
+  color: #1947c4;
+}
+.login-form-side > .brand {
+  font-size: 34px;
+}
+.login-subtitle,
+.login-footnote {
+  color: #697181;
+}
+.login-preview-note {
+  background: #f2f5ff;
+  border-color: #dce5ff;
+  color: #205bff;
+}
+.login-preview-note p {
+  color: #63718d;
+}
+.login-visual {
+  background: #fff;
+  border: 1px solid #e2eaff;
+}
+.login-visual:after {
+  width: 620px;
+  height: 620px;
+  border: 75px solid #e8efff;
+  right: -370px;
+  bottom: -310px;
+}
+.login-visual-heading,
+.login-visual-bottom {
+  position: relative;
+  z-index: 1;
+}
+.login-visual .pill {
+  background: #f2f6ff;
+  border-color: #dce6ff;
+  color: #205bff;
+}
+.login-visual h2 {
+  color: #202b42;
+  font-weight: 750;
+}
+.login-visual h2 span {
+  color: #205bff;
+}
+.login-visual-heading > p {
+  color: #69758b;
+}
+.conversation-card {
+  background: #fff;
+  border-color: #dce6ff;
+  color: #202b42;
+  box-shadow: 0 12px 28px #205bff0d;
+}
+.conversation-card small {
+  color: #69758b;
+}
+.conversation-icon,
+.conversation-icon.lime {
+  background: #205bff;
+  color: #fff;
+}
+.check-mark {
+  background: #edf2ff;
+  color: #205bff;
+}
+.connection-line span {
+  background: #668dff;
+}
+.login-instagram,
+.login-visual-bottom {
+  color: #69758b;
+}
+.welcome-banner {
+  background: #fff;
+  border-color: #dce6ff;
+}
+.welcome-banner h2 {
+  color: #202b42;
+}
+.welcome-banner p,
+.welcome-kicker {
+  color: #69758b;
+}
+.welcome-banner a {
+  color: #205bff;
+}
+.welcome-kicker > span,
+.node-zap {
+  background: #205bff;
+  color: #fff;
+}
+.orbit {
+  border-color: #dce6ff;
+}
+.art-caption,
+.art-star {
+  color: #5379d9;
+}

@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function member(workspaceId) {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.status == 'active'
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.workspaceId == workspaceId
+        && get(/databases/$(database)/documents/workspaces/$(workspaceId)).data.status == 'active';
+    }
+    match /users/{uid} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if false;
+    }
+    match /workspaces/{workspaceId} {
+      allow read: if member(workspaceId);
+      allow write: if false;
+      match /{group}/{id} {
+        allow read: if member(workspaceId) && group in ['automations', 'deliveries', 'connections'];
+        // All mutations go through a server that validates ownership and state.
+        allow write: if false;
+      }
+    }
+    match /{document=**} { allow read, write: if false; }
+  }
+}

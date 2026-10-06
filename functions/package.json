@@ -1,0 +1,26 @@
+{
+  "name": "follin-functions",
+  "private": true,
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test lib/security.test.js lib/schema.test.js",
+    "bootstrap": "node lib/bootstrap.js",
+    "start": "node lib/standalone.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "typescript": "~5.9.0"
+  }
+}
