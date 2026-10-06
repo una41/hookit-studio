@@ -1,4 +1,4 @@
-import { Search } from 'lucide-react';
+import { Search, LoaderCircle } from 'lucide-react';
 import { PostArtwork } from '../../components/ui/PostArtwork';
 import type { Post, Automation } from '../../types';
 export function PostList({
@@ -26,7 +26,7 @@ export function PostList({
     <section className="panel posts-list">
       <header>
         <strong>@{username}</strong>
-        <span>콘텐츠 {posts.length}개</span>
+        <span>{busy && !posts.length ? '불러오는 중…' : `콘텐츠 ${posts.length}개`}</span>
       </header>
       <div className="search-field">
         <Search size={16} />
@@ -42,7 +42,11 @@ export function PostList({
           {error}
         </p>
       )}
-      {busy && <p className="modal-description">게시물을 불러오고 있어요…</p>}
+      {busy && (
+        <p className="modal-description" role="status" aria-live="polite">
+          <LoaderCircle className="spin" size={18} aria-hidden="true" /> 게시물을 불러오는 중입니다
+        </p>
+      )}
       {!busy && !error && !posts.length && (
         <p className="modal-description">불러올 게시물이 없어요.</p>
       )}

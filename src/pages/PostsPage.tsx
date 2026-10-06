@@ -14,7 +14,7 @@ export function PostsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selected, setSelected] = useState('');
   const [search, setSearch] = useState('');
-  const [busy, setBusy] = useState(false);
+  const [busy, setBusy] = useState(data.account?.status === 'connected');
   const [error, setError] = useState('');
   const connected = data.account?.status === 'connected';
   async function reload() {
@@ -50,7 +50,7 @@ export function PostsPage() {
         action={
           <Button onClick={() => void reload()} loading={busy} disabled={!connected}>
             <RefreshCw size={16} />
-            게시물 불러오기
+            {busy ? '불러오는 중입니다' : '게시물 불러오기'}
           </Button>
         }
       />
@@ -83,7 +83,7 @@ export function PostsPage() {
             busy={busy}
             error={error}
           />
-          <PostDetail post={post} campaigns={campaigns} />
+          <PostDetail post={post} campaigns={campaigns} busy={busy} />
         </div>
       )}
     </>

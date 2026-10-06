@@ -1,13 +1,27 @@
 import { CreateAutomationLink } from '../automations/CreateAutomationLink';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, LoaderCircle } from 'lucide-react';
 import { PostArtwork } from '../../components/ui/PostArtwork';
 import { StatusBadge } from '../../components/ui/Badge';
 import type { Post, Automation } from '../../types';
-export function PostDetail({ post, campaigns }: { post?: Post; campaigns: Automation[] }) {
+export function PostDetail({
+  post,
+  campaigns,
+  busy = false,
+}: {
+  post?: Post;
+  campaigns: Automation[];
+  busy?: boolean;
+}) {
   return (
     <section className="panel post-detail">
-      {post ? (
+      {busy && !post ? (
+        <div className="empty-state" role="status" aria-live="polite">
+          <LoaderCircle className="spin" size={32} aria-hidden="true" />
+          <h2>게시물을 불러오는 중입니다</h2>
+          <p>인스타그램에서 게시물과 릴스를 가져오고 있어요. 잠시만 기다려 주세요.</p>
+        </div>
+      ) : post ? (
         <>
           <div className="post-detail-head">
             <PostArtwork post={post} />
