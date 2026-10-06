@@ -21,6 +21,7 @@
     "FIREBASE_WEB_API_KEY": "AIzaSyAVg2GltjmDRNvsA2d-DUXKr7Z5JpQ-FRI",
     "APP_ORIGIN": "https://hookit-studio.yn8206.workers.dev",
     "API_BASE_URL": "https://hookit-studio.yn8206.workers.dev/api",
-    "META_APP_ID": "1120042080372094"
+    "META_APP_ID": "1120042080372094",
+    "META_GRAPH_VERSION": "v26.0"
   }
 }
