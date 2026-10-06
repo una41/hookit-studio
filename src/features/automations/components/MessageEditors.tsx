@@ -109,7 +109,7 @@ export function CommentReplyEditor({ value, onChange }: Props) {
         ))}
       </div>
       {replies.map((reply, index) => (
-        <div key={index}>
+        <div key={index} className="reply-entry">
           <Field label={`자동 대댓글 문구 ${index + 1}`} required>
             {(id) => (
               <textarea
@@ -132,7 +132,7 @@ export function CommentReplyEditor({ value, onChange }: Props) {
           {replies.length > 1 && (
             <button
               type="button"
-              className="button button-secondary"
+              className="reply-delete"
               aria-label={`대댓글 문구 ${index + 1} 삭제`}
               onClick={() => {
                 if (active.current > index) active.current--;
