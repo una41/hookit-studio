@@ -27,7 +27,8 @@ export const automationSchema = z
     openingMessage: text(600),
     openingButton: text(20),
     followMessage: text(600),
-    profileButton: text(20),
+    // Retain legacy saved fields, but no longer render or send this button.
+    profileButton: text(20).default(''),
     recheckButton: text(20),
     deliveryMessage: text(600),
     links: z
@@ -49,7 +50,6 @@ export const automationSchema = z
         value.openingMessage,
         value.openingButton,
         value.followMessage,
-        value.profileButton,
         value.recheckButton,
         value.deliveryMessage,
         value.commentReply,

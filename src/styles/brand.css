@@ -229,13 +229,14 @@ a:focus-visible {
   margin-bottom: 30px;
 }
 .post-detail-head h2 {
-  font-size: 18px;
-  line-height: 1.7;
+  font-size: 12px;
+  line-height: 1.4;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  max-height: 200px;
+  max-height: 300px;
   overflow: auto;
   margin: 12px 0;
+  font-weight: normal;
 }
 .post-detail-head a {
   color: #205bff;

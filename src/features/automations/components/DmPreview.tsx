@@ -76,10 +76,6 @@ export function DmPreview({ value }: { value: Automation }) {
               {!follower && step === 1 ? (
                 <>
                   <div className="dm-bubble">{value.followMessage}</div>
-                  <div className="dm-action dm-display-action">
-                    {value.profileButton}
-                    <ExternalLink size={12} />
-                  </div>
                   <button className="dm-action" onClick={() => setStep(2)}>
                     {value.recheckButton}
                   </button>

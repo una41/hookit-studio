@@ -43,28 +43,16 @@ export function FollowPromptEditor({ value, onChange }: Props) {
           />
         )}
       </Field>
-      <div className="field-row">
-        <Field label="프로필 버튼 이름">
-          {(id) => (
-            <input
-              id={id}
-              maxLength={20}
-              value={value.profileButton}
-              onChange={(e) => onChange({ profileButton: e.target.value })}
-            />
-          )}
-        </Field>
-        <Field label="재확인 버튼 이름">
-          {(id) => (
-            <input
-              id={id}
-              maxLength={20}
-              value={value.recheckButton}
-              onChange={(e) => onChange({ recheckButton: e.target.value })}
-            />
-          )}
-        </Field>
-      </div>
+      <Field label="재확인 버튼 이름">
+        {(id) => (
+          <input
+            id={id}
+            maxLength={20}
+            value={value.recheckButton}
+            onChange={(e) => onChange({ recheckButton: e.target.value })}
+          />
+        )}
+      </Field>
       <p className="inline-note">
         팔로우 후 재확인 버튼을 누르면 실제 팔로우 상태를 다시 조회해요.
       </p>

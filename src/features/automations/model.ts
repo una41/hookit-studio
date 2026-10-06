@@ -13,7 +13,7 @@ export function newAutomation(): Automation {
     openingButton: '자료 받기',
     followMessage:
       '자료는 팔로워분들께 드리고 있어요. 계정을 팔로우한 뒤 아래 버튼을 눌러주세요 🌿',
-    profileButton: '프로필 보러 가기',
+    profileButton: '',
     recheckButton: '팔로우했어요',
     deliveryMessage: '기다려 주셔서 감사해요! 아래에서 자료를 확인해 주세요 ✨',
     links: [{ id: crypto.randomUUID(), label: '자료 확인하기', url: '' }],
@@ -38,12 +38,9 @@ export function validateAutomation(value: Automation, status: AutomationStatus):
   if (value.keywords.some((keyword) => keyword.length > 60 || !keyword.trim()))
     errors.push('키워드는 빈 값 없이 60자 이내로 입력해 주세요.');
   if (
-    [
-      value.openingButton,
-      value.profileButton,
-      value.recheckButton,
-      ...value.links.map((link) => link.label),
-    ].some((text) => text.length > 20)
+    [value.openingButton, value.recheckButton, ...value.links.map((link) => link.label)].some(
+      (text) => text.length > 20,
+    )
   )
     errors.push('버튼 이름은 20자 이내로 입력해 주세요.');
   if (
@@ -61,7 +58,6 @@ export function validateAutomation(value: Automation, status: AutomationStatus):
     value.openingMessage,
     value.openingButton,
     value.followMessage,
-    value.profileButton,
     value.recheckButton,
     value.deliveryMessage,
     value.commentReply,

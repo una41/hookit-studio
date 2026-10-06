@@ -258,14 +258,7 @@ async function checkAndSend(
     await send(
       account,
       { id: state.senderId },
-      buttonMessage(campaign.followMessage, [
-        {
-          type: 'web_url',
-          title: campaign.profileButton,
-          url: `https://www.instagram.com/${encodeURIComponent(account.username)}/`,
-        },
-        postback(campaign.recheckButton, id),
-      ]),
+      buttonMessage(campaign.followMessage, [postback(campaign.recheckButton, id)]),
     );
     await delivery.update({ status: 'awaiting_follow', error: '' });
     return;
