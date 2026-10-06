@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import {
   ChevronLeft,
   Phone,
@@ -15,7 +15,21 @@ import { useWorkspace } from '../../workspace/WorkspaceProvider';
 export function DmPreview({ value }: { value: Automation }) {
   const { data } = useWorkspace();
   const [follower, setFollower] = useState(true);
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(1);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const resultRef = useRef<HTMLDivElement>(null);
+  useLayoutEffect(() => {
+    const content = contentRef.current;
+    if (!content) return;
+    const result = resultRef.current;
+    content.scrollTop =
+      step > 0 && result
+        ? content.scrollTop +
+          result.getBoundingClientRect().top -
+          content.getBoundingClientRect().top -
+          16
+        : 0;
+  }, [follower, step]);
   return (
     <aside className="preview-column">
       <div className="preview-title">
@@ -26,19 +40,21 @@ export function DmPreview({ value }: { value: Automation }) {
       </div>
       <div className="preview-toggle">
         <button
+          aria-pressed={follower}
           className={follower ? 'selected' : ''}
           onClick={() => {
             setFollower(true);
-            setStep(0);
+            setStep(1);
           }}
         >
           이미 팔로워
         </button>
         <button
+          aria-pressed={!follower}
           className={!follower ? 'selected' : ''}
           onClick={() => {
             setFollower(false);
-            setStep(0);
+            setStep(1);
           }}
         >
           미팔로워
@@ -59,7 +75,7 @@ export function DmPreview({ value }: { value: Automation }) {
           <Phone size={17} />
           <Video size={18} />
         </div>
-        <div className="dm-content">
+        <div className="dm-content" ref={contentRef}>
           <div className="dm-day">오늘</div>
           <div className="dm-profile">
             <span className="dm-profile-avatar">d.</span>
@@ -72,7 +88,9 @@ export function DmPreview({ value }: { value: Automation }) {
           </button>
           {step > 0 && (
             <>
-              <div className="dm-outgoing">{value.openingButton || '자료 받기'}</div>
+              <div className="dm-outgoing" ref={resultRef}>
+                {value.openingButton || '자료 받기'}
+              </div>
               {!follower && step === 1 ? (
                 <>
                   <div className="dm-bubble">{value.followMessage}</div>
@@ -104,9 +122,10 @@ export function DmPreview({ value }: { value: Automation }) {
       </div>
       <p className="preview-explainer">
         <Info size={14} />
-        버튼을 눌러 흐름을 확인해 보세요.
+        탭을 선택하면 팔로우 확인 후의 메시지를 보여줘요.
         <br />
-        화면 예시이며 실제 메시지를 보내지 않아요.
+        처음부터 보려면 초기화 버튼을 누르세요. 재확인은 팔로우 성공 예시이며 실제 메시지를 보내지
+        않아요.
       </p>
     </aside>
   );
