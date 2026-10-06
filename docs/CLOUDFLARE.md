@@ -66,3 +66,7 @@ GitHub 자동 배포에서도 npm run build:worker 및 npm run build를 먼저 �
 - 처리 중 장애 또는 발송 결과 불명은 중복 방지를 위해 자동 재발송하지 않는다. 운영자가 이력을 확인해야 한다.
 - 실계정 OAuth·게시물·DM과 무료 플랜 CPU/요청 한도는 운영 검증 전이다. 웹훅 검증 성공만으로 발송 준비 완료는 아니다.
 - API 허용 출처는 Cloudflare 주소다. 기존 Firebase Hosting 주소 대신 위 주소로 접속한다.
+
+## Firebase 로그인 빌드 설정
+
+Firebase 공개 웹 설정은 src/lib/firebase.ts에 기본값으로 포함한다. GitHub 자동 빌드는 로컬 .env 파일 없이도 로그인 설정을 포함한다. 다른 Firebase 프로젝트로 변경할 때는 VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, VITE_FIREBASE_PROJECT_ID, VITE_FIREBASE_APP_ID를 모두 제공한다. 서비스 계정과 Meta 시크릿은 계속 Worker Secret에만 저장한다.
