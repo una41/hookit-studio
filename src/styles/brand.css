@@ -285,3 +285,6 @@ a:focus-visible {
 .button.button-secondary {
   margin-bottom: 5px;
 }
+
+.reply-examples { margin-bottom: 16px; }
+.reply-examples .button { display: block; max-width: 100%; height: auto; white-space: normal; text-align: left; line-height: 1.5; }
