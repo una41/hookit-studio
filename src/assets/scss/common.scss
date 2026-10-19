@@ -1,0 +1,230 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.bx_inner {
+  width: 100%;
+  max-width: $inner-width;
+  margin: 0 auto;
+  padding: 0 $spacing-lg;
+}
+
+.bx_section {
+  // 고정된 히어로 위로 올라오도록 한 단계 위에 배치
+  position: relative;
+  z-index: 1;
+
+  // 내용은 세로 가운데 정렬, 최소 높이 500px
+  display: flex;
+  align-items: center;
+  min-height: 500px;
+  padding: $spacing-xxl 0;
+
+  @include responsive(mobile) {
+    padding: $spacing-xxl-mobile 0;
+  }
+
+  // 히어로 아래 섹션은 흰색 / 회색을 번갈아 사용 (카드는 어두운 배경 유지)
+  &.light {
+    background: $color-bg-light;
+  }
+
+  &.gray {
+    background: $color-bg-gray;
+  }
+
+  &.light,
+  &.gray {
+    color: $color-text-dark;
+
+    .txt_eyebrow,
+    .txt_section_desc,
+    .txt_note,
+    .list_process .txt_card,
+    .list_strength .txt_card {
+      color: $color-text-sub-dark;
+    }
+
+    .txt_section_desc strong {
+      color: $color-text-dark;
+    }
+
+    .txt_flow,
+    .txt_service_extra strong,
+    .list_process .num,
+    .list_strength .num {
+      color: $color-primary;
+    }
+  }
+
+  // 브라우저 높이에 맞춘 섹션
+  &.full {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  // 가운데 정렬 섹션: 양옆 선이 있는 eyebrow
+  &.center {
+    text-align: center;
+
+    .txt_eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: $spacing-md;
+
+      &::before,
+      &::after {
+        width: 32px;
+        height: 1px;
+        content: '';
+        background: $color-primary;
+      }
+    }
+
+    .txt_section_desc {
+      margin: 0 auto;
+    }
+
+    .bx_button_group {
+      justify-content: center;
+    }
+
+    .list_service li,
+    .list_strategy li {
+      text-align: left;
+    }
+  }
+
+  &.point {
+    background: $color-primary;
+
+    .txt_eyebrow,
+    .txt_section_desc {
+      color: rgba($color-text, 0.8);
+    }
+  }
+}
+
+// 배경 영상: 화면에 고정, 스크롤하면 내용만 위로 지나감
+.bx_background_video {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  // 글자가 잘 읽히도록 어둡게 덮음
+  &::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    background: rgba($color-bg, 0.55);
+  }
+}
+
+.bx_button_group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+  margin-top: $spacing-xl;
+}
+
+.num {
+  font-family: $font-family-display;
+  font-weight: 700;
+  color: $color-primary-light;
+}
+
+// 버튼
+.btn {
+  @include flex-center;
+  padding: 16px 28px;
+  font-weight: 700;
+  color: $color-text;
+  background: $color-primary;
+  border: 1px solid $color-primary;
+  border-radius: $radius-pill;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &.line {
+    color: $color-primary;
+    background: $color-bg-light;
+    border-color: $color-line;
+  }
+
+  &.full {
+    width: 100%;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+
+  &.small {
+    padding: 5px 20px;
+    font-size: 12px;
+  }
+
+  &.kakao {
+    color: $color-kakao-text;
+    background: $color-kakao;
+    border-color: $color-kakao;
+  }
+}
+
+// 포인트 배경 위 버튼
+.point .btn.line {
+  border-color: rgba($color-text, 0.6);
+}
+
+// 로고: HOOKIT의 두 번째 O가 링 모양
+.logo {
+  display: inline-flex;
+  flex-direction: column;
+  font-family: $font-family-display;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+
+  &.small {
+    flex-direction: row;
+    gap: 0.4em;
+    font-size: 18px;
+  }
+
+  .logo_ring {
+    position: relative;
+    display: inline-block;
+    width: 0.8em;
+    height: 0.8em;
+    margin: 0 0.04em;
+    vertical-align: -0.02em;
+    border: 0.18em solid $color-primary;
+    border-top-color: $color-line;
+    border-left-color: $color-line;
+    border-radius: 50%;
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: -0.2em;
+      width: 0.22em;
+      height: 0.22em;
+      content: '';
+      background: $color-text;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}

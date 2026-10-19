@@ -1,0 +1,551 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// 히어로
+.bx_hero {
+  // 스크롤해도 화면에 고정되고, 다음 섹션이 위로 덮으며 올라옴
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 120px 0 $spacing-xxl;
+
+  @include responsive(mobile) {
+    padding: 72px 0 $spacing-xxl-mobile;
+  }
+
+  .list_target {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-top: $spacing-lg;
+
+    li {
+      padding: 8px 16px;
+      font-size: $font-size-small;
+      font-weight: 700;
+      color: $color-primary-light;
+      border: 1px solid $color-line;
+      border-radius: $radius-pill;
+    }
+  }
+
+  .bar_progress {
+    position: relative;
+    height: 4px;
+    margin-top: $spacing-xxl;
+    background: rgba($color-primary-light, 0.3);
+    border-radius: $radius-pill;
+
+    &::before {
+      display: block;
+      width: 30%;
+      height: 100%;
+      content: '';
+      background: $color-text;
+      border-radius: $radius-pill;
+    }
+
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 30%;
+      width: 16px;
+      height: 16px;
+      content: '';
+      background: $color-text;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+// 서비스 / 3331 전략 / 진행 과정 카드 목록
+.list_service,
+.list_strategy {
+  display: grid;
+  gap: $spacing-md;
+  margin-top: $spacing-xl;
+
+  li {
+    padding: $spacing-lg;
+    color: $color-text;
+    background: $color-bg-card;
+    border: 1px solid $color-line;
+    border-radius: $radius-card;
+
+    .tit_card {
+      margin: $spacing-sm 0 $spacing-xs;
+    }
+  }
+}
+
+.list_service {
+  grid-template-columns: repeat(3, 1fr);
+
+  // 파란 배경 위의 흰색 카드
+  li {
+    color: $color-text-dark;
+    background: $color-bg-light;
+    border-color: $color-bg-light;
+
+    .num {
+      color: $color-primary;
+    }
+
+    .txt_card {
+      color: $color-text-dark;
+    }
+  }
+
+  @include responsive(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include responsive(mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.list_strategy {
+  grid-template-columns: repeat(4, 1fr);
+
+  // 파란 카드: 파란 배경에서 보이도록 글자는 흰색 계열
+  li {
+    background: $color-primary;
+    border-color: $color-primary;
+
+    .txt_role {
+      color: $color-text;
+    }
+
+    .num {
+      font-size: $font-size-large;
+      color: $color-text;
+    }
+
+    .txt_card {
+      color: rgba($color-text, 0.8);
+    }
+  }
+
+  .txt_role {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  @include responsive(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include responsive(mobile) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// 진행 과정: 선으로 이어진 번호 원
+.list_process {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: $spacing-md;
+  margin-top: $spacing-xxl-mobile;
+
+  &::before {
+    position: absolute;
+    top: 32px;
+    right: 0;
+    left: 32px;
+    height: 1px;
+    content: '';
+    background: $color-line-light;
+  }
+
+  li {
+    position: relative;
+    text-align: left;
+
+    // 첫 단계는 파랗게 채움
+    &:first-child .num {
+      color: $color-text;
+      background: $color-primary;
+      border-color: $color-primary;
+    }
+  }
+
+  .num {
+    @include flex-center;
+    width: 64px;
+    height: 64px;
+    margin: 0 0 $spacing-md;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 50%;
+  }
+
+  @include responsive(tablet) {
+    grid-template-columns: 1fr;
+    gap: $spacing-xl;
+
+    &::before {
+      display: none;
+    }
+  }
+}
+
+.txt_flow {
+  font-family: $font-family-display;
+  font-weight: 700;
+  color: $color-primary-light;
+}
+
+.txt_service_extra,
+.txt_note {
+  margin-top: $spacing-lg;
+}
+
+.txt_service_extra strong {
+  color: $color-text;
+}
+
+// 강점 (WHY)
+.bx_why {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: $spacing-xxl-mobile;
+  align-items: center;
+
+  @include responsive(tablet) {
+    grid-template-columns: 1fr;
+  }
+
+  .tit_section em {
+    color: $color-primary;
+  }
+
+}
+
+.bx_flow {
+  margin-top: $spacing-xl;
+  padding: $spacing-xl;
+  color: $color-text-dark;
+  background: $color-bg-light;
+  border: 1px solid $color-line-light;
+  border-radius: $radius-card;
+  text-align: center;
+
+  .tit_flow {
+    display: block;
+    margin-bottom: $spacing-xs;
+    font-size: 24px;
+
+    em {
+      color: $color-primary;
+    }
+  }
+
+  .txt_card {
+    color: $color-text-dark;
+  }
+
+  .list_flow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: $spacing-xl;
+
+    li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: $spacing-xs;
+      font-weight: 700;
+    }
+
+    .num {
+      @include flex-center;
+      width: 56px;
+      height: 56px;
+      color: $color-primary;
+      background: $color-bg-light;
+      border: 1px solid $color-primary;
+      border-radius: 50%;
+    }
+  }
+}
+
+.list_strength {
+  li {
+    display: flex;
+    gap: $spacing-lg;
+    padding: $spacing-xl 0;
+    border-top: 1px solid $color-line-light;
+
+    &:last-child {
+      border-bottom: 1px solid $color-line-light;
+    }
+
+    .tit_card {
+      margin-bottom: $spacing-xs;
+      font-size: 22px;
+    }
+  }
+}
+
+// 3331 전략: 큰 숫자 배경 글자와 도형 장식
+.bx_section.bx_strategy {
+  overflow: hidden;
+
+  .txt_eyebrow {
+    font-family: $font-family-base;
+    letter-spacing: 0;
+    color: $color-primary;
+  }
+
+  .bx_inner {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.bx_strategy .bg_word {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  font-family: $font-family-display;
+  font-size: 340px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: $color-bg-gray;
+  pointer-events: none;
+  transform: translateX(-50%);
+
+  @include responsive(mobile) {
+    font-size: 150px;
+  }
+}
+
+.bx_strategy .bg_dot,
+.bx_strategy .bg_outline,
+.bx_strategy .bg_fill {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+
+  @include responsive(mobile) {
+    display: none;
+  }
+}
+
+.bx_strategy .bg_dot {
+  top: 150px;
+  left: 14%;
+  width: 18px;
+  height: 18px;
+  background: $color-primary;
+}
+
+.bx_strategy .bg_outline {
+  top: 110px;
+  left: 79%;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba($color-primary, 0.4);
+}
+
+.bx_strategy .bg_fill {
+  top: 210px;
+  left: 86.5%;
+  width: 64px;
+  height: 64px;
+  background: rgba($color-primary, 0.1);
+}
+
+// 서비스: 파란 배경의 도형 장식과 흐르는 글자 띠
+.bx_section.bx_service {
+  padding-bottom: 180px;
+  overflow: hidden;
+
+  @include responsive(mobile) {
+    padding-bottom: 110px;
+  }
+
+  .txt_eyebrow {
+    font-family: $font-family-base;
+    letter-spacing: 0;
+    color: $color-text;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .bx_inner {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.bx_service .bg_dots {
+  position: absolute;
+  top: 70px;
+  left: 70px;
+  width: 150px;
+  height: 100px;
+  background-image: radial-gradient(rgba($color-text, 0.35) 2px, transparent 2px);
+  background-size: 24px 24px;
+
+  @include responsive(mobile) {
+    display: none;
+  }
+}
+
+.bx_service .bg_ring_top {
+  position: absolute;
+  border: 56px solid rgba($color-text, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bx_service .bg_ring_top {
+  top: -200px;
+  right: -160px;
+  width: 520px;
+  height: 520px;
+
+  @include responsive(mobile) {
+    top: -120px;
+    right: -120px;
+    width: 300px;
+    height: 300px;
+    border-width: 36px;
+  }
+}
+
+// 아래쪽에 흐르는 글자 띠 (같은 묶음 2개를 이어 붙여 끊김 없이 반복)
+.bx_service .bx_marquee {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bx_marquee .list_marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 30s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.bx_marquee .bx_marquee_group {
+  display: flex;
+  flex-shrink: 0;
+  gap: 40px;
+  align-items: center;
+  padding-right: 40px;
+  font-family: $font-family-display;
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: transparent;
+  white-space: nowrap;
+  -webkit-text-stroke: 2px rgba($color-text, 0.3);
+
+  .point {
+    color: rgba($color-text, 0.2);
+    -webkit-text-stroke: 0;
+  }
+
+  i {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba($color-text, 0.3);
+    border-radius: 50%;
+  }
+
+  @include responsive(mobile) {
+    gap: 24px;
+    padding-right: 24px;
+    font-size: 56px;
+  }
+}
+
+@keyframes marquee-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+// 첫 단계 번호는 파란 원 위에 흰색 (섹션의 파란 번호색 규칙보다 우선)
+.bx_section.gray .list_process li:first-child .num {
+  color: $color-text;
+}
+
+// 진행 과정: 점 무늬 배경, 큰 STEP 글자, 파란 링 장식
+.bx_section.bx_process {
+  overflow: hidden;
+
+  // 데스크톱에서는 화면에 고정되고, 다음 섹션(상담 문의)이 위로 덮으며 올라옴
+  // (태블릿 이하는 단계가 세로로 쌓여 화면보다 길어지므로 고정하지 않음)
+  @media (min-width: 1025px) {
+    position: sticky;
+    top: 0;
+  }
+
+  background-image: radial-gradient(rgba($color-text-dark, 0.1) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+
+  .txt_eyebrow {
+    font-family: $font-family-base;
+    letter-spacing: 0;
+    color: $color-primary;
+  }
+
+  .bx_inner {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.bx_process .bg_step {
+  position: absolute;
+  top: -110px;
+  right: -60px;
+  font-family: $font-family-display;
+  font-size: 300px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  pointer-events: none;
+  -webkit-text-stroke: 2px rgba($color-text-dark, 0.12);
+
+  @include responsive(mobile) {
+    top: -50px;
+    font-size: 130px;
+  }
+}
+
+.bx_process .bg_ring {
+  position: absolute;
+  bottom: -170px;
+  left: -150px;
+  width: 300px;
+  height: 300px;
+  border: 56px solid rgba($color-primary, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+
+  @include responsive(mobile) {
+    display: none;
+  }
+}

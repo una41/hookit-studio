@@ -1,0 +1,191 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// 문의 관리 페이지 (/admin)
+.bx_admin {
+  min-height: 100vh;
+  padding: $spacing-xl $spacing-md;
+  color: $color-text-dark;
+  background: $color-bg-gray;
+
+  .bx_admin_inner {
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .bx_admin_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-lg;
+  }
+
+  .tit_admin {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .btn_text {
+    padding: $spacing-xs;
+    font-size: $font-size-small;
+    font-weight: 700;
+    color: $color-text-sub-dark;
+    background: transparent;
+    border: 0;
+  }
+
+  .txt_error {
+    font-size: 13px;
+    color: $color-danger;
+  }
+
+  .nodata {
+    padding: $spacing-xxl-mobile 0;
+    color: $color-text-sub-dark;
+    text-align: center;
+  }
+
+  .ipt_text {
+    width: 100%;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: $font-size-small;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 12px;
+  }
+}
+
+// 로그인
+.form_admin_login {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  max-width: 360px;
+  padding: $spacing-xl;
+  margin: $spacing-xxl-mobile auto 0;
+  background: $color-bg-light;
+  border: 1px solid $color-line-light;
+  border-radius: 24px;
+
+  .lab_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .txt_field {
+    font-size: 13px;
+    font-weight: 700;
+  }
+}
+
+// 상태 필터
+.list_filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-bottom: $spacing-md;
+
+  .btn_filter {
+    padding: 6px 14px;
+    font-size: $font-size-small;
+    font-weight: 700;
+    color: $color-text-sub-dark;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: $radius-pill;
+
+    &.active {
+      color: $color-text;
+      background: $color-primary;
+      border-color: $color-primary;
+    }
+
+    .num {
+      margin-left: 6px;
+      color: inherit;
+    }
+  }
+}
+
+// 문의 목록
+.list_inquiry {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .item_inquiry {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-lg;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 16px;
+  }
+
+  .bx_inquiry_head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  .txt_inquiry_name {
+    font-size: $font-size-large;
+  }
+
+  .txt_inquiry_job {
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border-radius: $radius-pill;
+  }
+
+  .txt_inquiry_date {
+    margin-left: auto;
+    font-size: 12px;
+    color: $color-text-sub-dark;
+  }
+
+  .txt_inquiry_row {
+    font-size: $font-size-small;
+
+    .txt_label {
+      margin-right: $spacing-xs;
+      font-weight: 700;
+      color: $color-text-sub-dark;
+    }
+  }
+
+  .txt_inquiry_message {
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-small;
+    white-space: pre-wrap;
+    background: $color-bg-gray;
+    border-radius: 12px;
+  }
+
+  .bx_inquiry_control {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: $spacing-sm;
+    margin-top: $spacing-xs;
+
+    @include responsive(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .sel_basic {
+    padding: 10px 14px;
+    font: inherit;
+    font-size: $font-size-small;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 12px;
+  }
+}

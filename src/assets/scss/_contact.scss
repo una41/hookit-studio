@@ -1,0 +1,433 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// 상담 문의 섹션: 흰 배경 위에 둥근 파란 패널, 왼쪽 문구와 오른쪽 흰 카드
+.bx_section.bx_contact {
+  position: relative;
+  overflow: hidden;
+  color: $color-text;
+
+  // 화면 전체 폭을 쓰는 파란 섹션
+  .bx_contact_panel {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-xxl-mobile;
+    align-items: center;
+    max-width: none;
+    padding: 0 clamp(24px, 6.5vw, 108px);
+
+    @include responsive(tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .bx_contact_text {
+    position: relative;
+    z-index: 1;
+  }
+
+  .txt_eyebrow {
+    font-family: $font-family-base;
+    letter-spacing: 0;
+    color: $color-text;
+  }
+
+  .tit_section em {
+    color: $color-accent;
+  }
+
+  .txt_section_desc {
+    color: rgba($color-text, 0.9);
+  }
+}
+
+// 등장 효과: 섹션이 보이기 시작하면(.visible) 문구와 카드는 아래에서 위로, 장식은 제자리로
+.bx_section.bx_contact {
+  .bx_contact_text,
+  .card_contact {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .card_contact {
+    transition: height 0.4s ease, opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+  }
+
+  .bg_hello,
+  .bg_ring_top {
+    opacity: 0;
+    transition: opacity 1s ease 0.2s, transform 1s ease 0.2s;
+  }
+
+  .bg_hello {
+    transform: translateX(-60px);
+  }
+
+  .bg_ring_top {
+    transform: translateY(-80px);
+  }
+
+  &.visible {
+    .bx_contact_text,
+    .card_contact,
+    .bg_hello,
+    .bg_ring_top {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bx_contact_text,
+    .card_contact,
+    .bg_hello,
+    .bg_ring_top {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+}
+
+.bx_contact .list_tag {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  margin-top: $spacing-lg;
+
+  li {
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    border: 1px solid rgba($color-text, 0.5);
+    border-radius: $radius-pill;
+  }
+}
+
+// 파란 패널 안의 배경 장식
+.bx_contact .bg_hello {
+  position: absolute;
+  bottom: -110px;
+  left: 40px;
+  font-family: $font-family-display;
+  font-size: 300px;
+  font-weight: 800;
+  line-height: 1;
+  color: transparent;
+  pointer-events: none;
+  -webkit-text-stroke: 2px rgba($color-text, 0.1);
+
+  @include responsive(mobile) {
+    font-size: 100px;
+  }
+}
+
+.bx_contact .bg_ring_top {
+  position: absolute;
+  border: 56px solid rgba($color-text, 0.15);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.bx_contact .bg_ring_top {
+  top: -170px;
+  right: 1.5%;
+  width: 500px;
+  height: 500px;
+  border-width: 80px;
+}
+
+// 오른쪽 흰 카드: 세 화면(선택, 폼, 안내)을 같은 자리에 겹쳐 두고 페이드로 전환
+.card_contact {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  overflow: hidden;
+  color: $color-text-dark;
+  background: $color-bg-light;
+  border-radius: 24px;
+  transition: height 0.4s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// 모든 화면을 겹쳐 두고, 카드 높이는 현재 화면의 높이를 따라감(세로만 변화)
+.card_contact .view_contact {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: $spacing-xl;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0s 0.3s;
+
+  @include responsive(mobile) {
+    padding: $spacing-lg;
+  }
+
+  &.open {
+    pointer-events: auto;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s, visibility 0s;
+  }
+}
+
+// 선택 화면: 왼쪽 정렬
+.bx_contact_choice {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  text-align: left;
+
+  .tit_message {
+    font-size: 22px;
+  }
+
+  .txt_message {
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-small;
+    color: $color-text-sub-dark;
+  }
+
+  .txt_note {
+    margin-top: $spacing-xs;
+    font-size: 13px;
+    color: $color-text-sub-dark;
+    text-align: center;
+  }
+
+  .ico_kakao {
+    margin-right: $spacing-xs;
+    fill: currentcolor;
+  }
+}
+
+// 안내 화면
+.bx_contact_message {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+
+  .tit_message {
+    font-size: 22px;
+  }
+
+  .txt_message {
+    margin-bottom: $spacing-md;
+    font-size: $font-size-small;
+    color: $color-text-sub-dark;
+  }
+
+  .ico_check {
+    @include flex-center;
+    width: 72px;
+    height: 72px;
+    font-size: 32px;
+    font-weight: 700;
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border-radius: 50%;
+  }
+
+  .btn_text {
+    padding: $spacing-xs;
+    font-size: $font-size-small;
+    font-weight: 700;
+    color: $color-text-sub-dark;
+    background: transparent;
+    border: 0;
+  }
+}
+
+// 폼 화면
+.bx_contact_formwrap {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  // 오른쪽 위 닫기 버튼 (선택 화면으로 돌아감)
+  .btn_close {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+    line-height: 1;
+    color: $color-text-sub-dark;
+    background: transparent;
+    border: 0;
+    border-radius: 50%;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $color-bg-gray;
+    }
+  }
+
+  .btn_back {
+    align-self: flex-start;
+    padding: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: $color-text-sub-dark;
+    background: transparent;
+    border: 0;
+  }
+
+  .tit_message {
+    margin-top: $spacing-md;
+    font-size: 22px;
+  }
+
+  .txt_message {
+    margin: $spacing-xs 0 $spacing-lg;
+    font-size: $font-size-small;
+    color: $color-text-sub-dark;
+  }
+}
+
+.form_contact {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  .bx_field {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .bx_field_row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+
+    @include responsive(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .lab_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .txt_field {
+    padding: 0;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .txt_required {
+    color: $color-primary;
+  }
+
+  .list_job {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    margin-top: 6px;
+  }
+
+  // 스팸 방지 숨김 입력칸 (화면 밖으로 치움)
+  .ipt_honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .txt_error {
+    font-size: 13px;
+    color: $color-danger;
+  }
+
+  // 기타 직업 직접 입력칸
+  .list_job + .ipt_text {
+    margin-top: $spacing-xs;
+  }
+
+  .ipt_text {
+    width: 100%;
+    padding: 12px 16px;
+    font: inherit;
+    font-size: $font-size-small;
+    color: $color-text-dark;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 12px;
+
+    &::placeholder {
+      color: $color-text-sub;
+    }
+
+    &:focus {
+      outline: 0;
+      border-color: $color-primary;
+    }
+  }
+
+  textarea.ipt_text {
+    resize: vertical;
+  }
+
+  .lab_agree {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+    font-size: 13px;
+    color: $color-text-sub-dark;
+  }
+
+  .ipt_check {
+    width: 18px;
+    height: 18px;
+    accent-color: $color-primary;
+  }
+}
+
+// 직업 선택 알약 (라디오)
+.lab_pill {
+  position: relative;
+  cursor: pointer;
+
+  .ipt_radio {
+    position: absolute;
+    opacity: 0;
+  }
+
+  span {
+    display: block;
+    padding: 6px 16px;
+    font-size: $font-size-small;
+    font-weight: 700;
+    color: $color-text-sub-dark;
+    border: 1px solid $color-line-light;
+    border-radius: $radius-pill;
+  }
+
+  .ipt_radio:checked + span {
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+    border-color: $color-primary;
+  }
+
+  .ipt_radio:focus-visible + span {
+    outline: 2px solid $color-primary;
+  }
+}

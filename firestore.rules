@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 문의: 누구나 작성만 가능(형식 검증), 읽기와 수정은 관리자 계정만, 삭제 불가
+    // 관리자 이메일은 src/constants/siteContent.ts의 ADMIN_LOGIN_EMAIL과 같아야 함
+    match /inquiries/{inquiryId} {
+      allow create: if request.resource.data.keys().hasOnly(['job', 'name', 'phone', 'account', 'message', 'status', 'memo', 'createdAt'])
+        && request.resource.data.job is string && request.resource.data.job.size() <= 60
+        && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() <= 50
+        && request.resource.data.phone is string && request.resource.data.phone.size() > 0 && request.resource.data.phone.size() <= 30
+        && request.resource.data.account is string && request.resource.data.account.size() <= 200
+        && request.resource.data.message is string && request.resource.data.message.size() <= 2000
+        && request.resource.data.status == 'new'
+        && request.resource.data.memo == ''
+        && request.resource.data.createdAt == request.time;
+
+      allow read, update: if request.auth != null && request.auth.token.email == 'admin@hookitstudio.kr';
+
+      allow delete: if false;
+    }
+  }
+}

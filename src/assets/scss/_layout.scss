@@ -1,0 +1,129 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.bx_header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+
+  // 소개 섹션이 시작되면 흰색 헤더로 서서히 전환
+  &.light {
+    color: $color-text-header;
+    background: $color-bg-light;
+    border-bottom-color: $color-line-header;
+
+    .gnb a {
+      font-weight: 700;
+      color: $color-text-header;
+    }
+
+    @include logo-on-light;
+  }
+
+  .bx_inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+  }
+
+  .gnb {
+    display: flex;
+    gap: $spacing-xl;
+    font-size: $font-size-small;
+    color: $color-text-sub;
+
+    @include responsive(mobile) {
+      display: none;
+    }
+  }
+}
+
+.bx_footer {
+  position: relative;
+  padding: 20px 0;
+  overflow: hidden;
+  color: $color-text-dark;
+  background: $color-bg-light;
+  border-top: 1px solid $color-line-header;
+
+  // 아래쪽이 잘려 보이는 큰 배경 글자
+  .bg_footer_word {
+    position: absolute;
+    bottom: -150px;
+    left: -10px;
+    font-family: $font-family-display;
+    font-size: 300px;
+    font-weight: 800;
+    line-height: 1;
+    color: $color-bg-gray;
+    pointer-events: none;
+
+    @include responsive(mobile) {
+      font-size: 120px;
+    }
+  }
+
+  .bx_inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .bx_footer_top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-lg;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 10px;
+  }
+
+  .txt_footer_desc {
+    margin-top: 0;
+    font-size: 12px;
+    color: $color-text-sub-dark;
+  }
+
+  .list_footer_link {
+    font-size: 12px;
+    color: $color-text-sub-dark;
+
+    li + li {
+      margin-top: $spacing-xs;
+    }
+
+    .txt_label {
+      margin-right: $spacing-xs;
+    }
+
+    a {
+      color: $color-text-dark;
+    }
+  }
+
+  .txt_copy {
+    font-size: 11px;
+    color: $color-text-sub-dark;
+  }
+
+  @include logo-on-light;
+}
+
+.list_business {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs $spacing-lg;
+  padding: 10px 0;
+  font-size: 12px;
+  color: $color-text-sub-dark;
+  border-top: 1px solid $color-line-light;
+
+  .txt_label {
+    margin-right: $spacing-xs;
+    color: $color-text-dark;
+    font-weight: 700;
+  }
+}
