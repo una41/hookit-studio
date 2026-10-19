@@ -183,6 +183,58 @@
   }
 }
 
+// 맨 위로 버튼 (ScrollTopButton)
+.btn_top {
+  position: fixed;
+  right: $spacing-lg;
+  bottom: $spacing-lg;
+  z-index: 50;
+  @include flex-center;
+  width: 44px;
+  height: 44px;
+  font-size: 20px;
+  font-weight: 700;
+  color: $color-text;
+  pointer-events: none;
+  background: $color-primary;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
+
+  &.visible {
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 안내 팝업 (BaseModal)
+.pop_wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  @include flex-center;
+  padding: $spacing-md;
+  background: $color-dim;
+}
+
+.pop {
+  width: 100%;
+  max-width: 360px;
+  padding: $spacing-lg;
+  color: $color-text-dark;
+  text-align: center;
+  background: $color-bg-light;
+  border-radius: $radius-card;
+
+  .txt_pop {
+    margin-bottom: $spacing-lg;
+    font-size: $font-size-base;
+    font-weight: 700;
+  }
+}
+
 // 포인트 배경 위 버튼
 .point .btn.line {
   border-color: rgba($color-text, 0.6);

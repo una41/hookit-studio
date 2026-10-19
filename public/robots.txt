@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /survey
+
+Sitemap: https://hookit-studio.yn8206.workers.dev/sitemap.xml

@@ -4,4 +4,4 @@ compatibility_date = "2026-10-01"
 
 # 문의 알림을 호출할 수 있는 사이트 주소 (쉼표로 구분, 배포 도메인이 정해지면 추가)
 [vars]
-ALLOWED_ORIGIN_LIST = "http://localhost:5173,https://hookitstudio.kr,https://www.hookitstudio.kr"
+ALLOWED_ORIGIN_LIST = "http://localhost:5173,https://hookit-studio.yn8206.workers.dev,https://hookitstudio.kr,https://www.hookitstudio.kr"

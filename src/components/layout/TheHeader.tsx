@@ -25,7 +25,14 @@ export default function TheHeader() {
   return (
     <header className={is_light ? 'bx_header light' : 'bx_header'}>
       <div className='bx_inner'>
-        <a href='#top' className='link_logo'>
+        <a
+          href='/'
+          className='link_logo'
+          onClick={(event) => {
+            event.preventDefault()
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+          }}
+        >
           <Logo modifier='small' />
         </a>
         <nav className='gnb'>

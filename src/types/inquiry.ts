@@ -1,4 +1,4 @@
-export type TInquiryStatus = 'new' | 'progress' | 'contract' | 'hold'
+export type TInquiryStatus = 'new' | 'progress' | 'contract' | 'hold' | 'closed'
 
 // 방문자가 폼에 입력하는 값
 export interface IInquiryInput {

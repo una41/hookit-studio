@@ -1,28 +1,86 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// 문의 관리 페이지 (/admin)
+// 관리자 페이지 (/admin): 위쪽 헤더, 왼쪽 메뉴, 오른쪽 내용
 .bx_admin {
   min-height: 100vh;
-  padding: $spacing-xl $spacing-md;
   color: $color-text-dark;
   background: $color-bg-gray;
 
-  .bx_admin_inner {
-    max-width: 880px;
-    margin: 0 auto;
-  }
-
-  .bx_admin_head {
+  .bx_admin_header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: $spacing-lg;
+    height: 60px;
+    padding: 0 $spacing-lg;
+    background: $color-bg-light;
+    border-bottom: 1px solid $color-line-header;
   }
 
   .tit_admin {
-    font-size: 24px;
+    font-size: 18px;
     font-weight: 800;
+  }
+
+  .bx_admin_body {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: calc(100vh - 60px);
+
+    @include responsive(mobile) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .snb_admin {
+    display: flex;
+    flex-direction: column;
+    background: $color-bg-light;
+    border-right: 1px solid $color-line-header;
+
+    @include responsive(mobile) {
+      flex-direction: row;
+      border-right: 0;
+      border-bottom: 1px solid $color-line-header;
+    }
+
+    // 가로로 꽉 찬 메뉴 줄: 선택된 메뉴는 파란 글자와 연한 파란 배경
+    .link_menu {
+      padding: 10px 14px;
+      font-size: $font-size-small;
+      font-weight: 400;
+      color: $color-text-sub-dark;
+      background: $color-bg-gray;
+      border-bottom: 1px solid $color-line-header;
+
+      @include responsive(mobile) {
+        flex: 1;
+        text-align: center;
+      }
+
+      &.active {
+        font-weight: 700;
+        color: $color-primary;
+        background: rgba($color-primary, 0.1);
+      }
+    }
+  }
+
+  .bx_admin_content {
+    min-width: 0;
+    max-width: 1100px;
+    padding: $spacing-lg;
+
+    @include responsive(mobile) {
+      padding: $spacing-md;
+    }
+  }
+
+  .bx_admin_login {
+    padding: 0 $spacing-md $spacing-xl;
   }
 
   .btn_text {
@@ -32,6 +90,41 @@
     color: $color-text-sub-dark;
     background: transparent;
     border: 0;
+  }
+
+  // 질문, 응답의 작은 삭제 버튼
+  .btn_text.btn_remove {
+    display: block;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 400;
+    color: $color-text;
+    background: $color-danger;
+    border-radius: 3px;
+  }
+
+  // 목록 위의 선택 삭제 줄
+  .bx_bulk_bar {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    margin-bottom: $spacing-sm;
+    font-size: $font-size-small;
+
+    .btn_text.btn_remove {
+      margin: 0;
+    }
+
+    .lab_check {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+  }
+
+  .col_check {
+    width: 40px;
+    padding-right: 0;
   }
 
   .txt_error {
@@ -46,13 +139,61 @@
   }
 
   .ipt_text {
-    width: 100%;
-    padding: 10px 14px;
-    font: inherit;
+    @include field-input;
+  }
+
+  // 관리자 화면의 버튼은 작게
+  .btn {
+    min-width: 88px;
+    padding: 10px 24px;
     font-size: $font-size-small;
-    background: $color-bg-light;
-    border: 1px solid $color-line-light;
-    border-radius: 12px;
+
+    &.danger {
+      color: $color-danger;
+      border-color: $color-danger;
+    }
+
+    // 헤더의 logout 버튼
+    &.logout {
+      min-width: 65px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-weight: 400;
+      color: $color-text;
+      background: $color-logout-button;
+      border: 1px solid $color-logout-line;
+      border-radius: 3px;
+    }
+
+    // 목록 버튼
+    &.list {
+      min-width: 75px;
+      padding: 5px 10px;
+      font-size: 12px;
+      color: $color-text;
+      background: $color-list-button;
+      border: 0;
+      border-radius: 3px;
+    }
+  }
+
+  // 오른쪽 위에 목록으로 버튼
+  .bx_detail_top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: $spacing-sm;
+  }
+
+  .bx_page_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $spacing-md;
+  }
+
+  .tit_page {
+    font-size: 20px;
+    font-weight: 800;
   }
 }
 
@@ -109,16 +250,121 @@
   }
 }
 
-// 문의 목록
-.list_inquiry {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
+// 상태 표시
+.txt_status {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: $color-text-sub-dark;
+  white-space: nowrap;
+  background: $color-bg-gray;
+  border-radius: $radius-pill;
 
-  .item_inquiry {
+  &.new {
+    color: $color-primary;
+    background: rgba($color-primary, 0.1);
+  }
+
+  &.progress {
+    color: $color-text-dark;
+    background: rgba($color-accent, 0.5);
+  }
+
+  &.contract {
+    color: $color-success;
+    background: rgba($color-success, 0.12);
+  }
+}
+
+// 문의 목록 (게시판)
+.bx_tbl_scroll {
+  overflow-x: auto;
+  background: $color-bg-light;
+  border: 1px solid $color-line-light;
+  border-radius: 16px;
+}
+
+.tbl_inquiry {
+  width: 100%;
+  font-size: $font-size-small;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 14px $spacing-md;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid $color-line-header;
+  }
+
+  th {
+    font-size: 12px;
+    color: $color-text-sub-dark;
+    background: $color-bg-gray;
+  }
+
+  tbody tr {
+    cursor: pointer;
+
+    &:hover {
+      background: $color-bg-gray;
+    }
+
+    &:last-child td {
+      border-bottom: 0;
+    }
+  }
+
+  .col_num {
+    width: 64px;
+    color: $color-text-sub-dark;
+  }
+
+  .link_inquiry {
+    font-weight: 700;
+  }
+
+  @include responsive(mobile) {
+    .col_job,
+    .col_phone {
+      display: none;
+    }
+  }
+}
+
+.bx_paging {
+  display: flex;
+  gap: $spacing-md;
+  align-items: center;
+  justify-content: center;
+  margin-top: $spacing-lg;
+
+  .btn_page {
+    padding: 6px 16px;
+    font-size: $font-size-small;
+    font-weight: 700;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: $radius-pill;
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+
+  .txt_page {
+    font-size: $font-size-small;
+    color: $color-text-sub-dark;
+  }
+}
+
+// 문의 상세, 설문 편집 공통
+.bx_admin {
+  .card_inquiry {
     display: flex;
     flex-direction: column;
-    gap: $spacing-xs;
+    gap: $spacing-md;
     padding: $spacing-lg;
     background: $color-bg-light;
     border: 1px solid $color-line-light;
@@ -151,41 +397,224 @@
     color: $color-text-sub-dark;
   }
 
-  .txt_inquiry_row {
+  .list_inquiry_info {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: $spacing-xs $spacing-md;
     font-size: $font-size-small;
 
-    .txt_label {
-      margin-right: $spacing-xs;
+    dt {
       font-weight: 700;
       color: $color-text-sub-dark;
     }
   }
 
   .txt_inquiry_message {
-    padding: $spacing-sm $spacing-md;
+    min-height: 80px;
+    padding: $spacing-md;
     font-size: $font-size-small;
     white-space: pre-wrap;
     background: $color-bg-gray;
     border-radius: 12px;
   }
 
+  // 상태 선택과 메모를 같은 줄에 맞춰 배치
   .bx_inquiry_control {
     display: grid;
-    grid-template-columns: 140px 1fr;
-    gap: $spacing-sm;
-    margin-top: $spacing-xs;
+    grid-template-columns: 160px 1fr;
+    gap: $spacing-md;
+    align-items: start;
 
     @include responsive(mobile) {
       grid-template-columns: 1fr;
     }
   }
 
+  .lab_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .txt_field {
+    font-size: 13px;
+    font-weight: 700;
+  }
+
   .sel_basic {
-    padding: 10px 14px;
-    font: inherit;
+    @include field-input;
+    width: auto;
+  }
+
+  .ipt_text {
+    resize: vertical;
+  }
+
+  // 오른쪽 아래에 삭제, 저장 버튼
+  .bx_inquiry_action {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+    justify-content: flex-end;
+
+    .txt_notice {
+      margin-right: auto;
+      font-size: 13px;
+      color: $color-text-sub-dark;
+
+      &.txt_error {
+        color: $color-danger;
+      }
+    }
+  }
+}
+
+// 설문 편집
+.card_survey_editor {
+  .bx_survey_link {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: $spacing-sm;
+    align-items: center;
+  }
+
+  .lab_check {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
     font-size: $font-size-small;
-    background: $color-bg-light;
-    border: 1px solid $color-line-light;
+  }
+
+  .list_question_editor {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .item_question_editor {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-md;
+    background: $color-bg-gray;
     border-radius: 12px;
+  }
+
+  .bx_question_head {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+    .num {
+      @include flex-center;
+      width: 28px;
+      height: 28px;
+      font-size: 13px;
+      font-weight: 700;
+      color: $color-text;
+      background: $color-primary;
+      border-radius: 50%;
+    }
+
+    // 번호, 종류 선택, 필수 체크가 한 줄 가운데에 맞도록 정리
+    .sel_basic {
+      padding: 6px 12px;
+      border-radius: 5px;
+    }
+
+    .lab_check {
+      gap: 6px;
+      line-height: 1;
+    }
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+
+    .btn_remove {
+      margin-left: auto;
+    }
+  }
+}
+
+// 설문 응답 목록
+.bx_survey_response {
+  margin-top: $spacing-lg;
+
+  .tit_page {
+    display: block;
+    margin-bottom: $spacing-sm;
+  }
+
+  .list_response {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    li {
+      background: $color-bg-light;
+      border: 1px solid $color-line-light;
+      border-radius: 12px;
+    }
+
+    summary {
+      display: flex;
+      gap: $spacing-sm;
+      align-items: center;
+      padding: 14px $spacing-md;
+      font-size: $font-size-small;
+      cursor: pointer;
+    }
+
+    // 펼쳐지는 줄임을 알 수 있도록 화살표 표시
+    summary::before {
+      content: '▸';
+      color: $color-text-sub-dark;
+    }
+
+    details[open] summary::before {
+      content: '▾';
+    }
+
+    .txt_response_email {
+      font-weight: 700;
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid $color-line-header;
+    }
+  }
+
+  .list_response_answer {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    font-size: $font-size-small;
+
+    counter-reset: question;
+
+    div {
+      counter-increment: question;
+    }
+
+    dt {
+      font-weight: 700;
+      color: $color-text-sub-dark;
+
+      &::before {
+        content: counter(question) '. ';
+      }
+    }
+
+    // 답변은 질문과 같은 왼쪽 선에 맞춤 (브라우저 기본 들여쓰기 제거)
+    dd {
+      margin: 4px 0 0;
+      white-space: pre-wrap;
+    }
+  }
+
+  .btn_remove {
+    margin: 0 $spacing-sm $spacing-sm auto;
   }
 }

@@ -1,10 +1,11 @@
 import { addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, serverTimestamp, updateDoc } from 'firebase/firestore'
 import type { Timestamp } from 'firebase/firestore'
 import { getFirestoreDatabase } from '../firebase'
+import { deleteDocumentList } from './batchDelete'
+import { withTimeout } from './withTimeout'
 import type { IInquiry, IInquiryInput, TInquiryStatus } from '../types/inquiry'
 
 const INQUIRY_COLLECTION = 'inquiries'
-const SUBMIT_TIMEOUT_MILLISECOND = 10000
 
 // 방문자 문의 저장 (firestore.rules의 검증 형식과 같아야 함)
 // Firestore는 연결이 안 되면 오류 없이 계속 대기하므로, 시간 안에 저장되지 않으면 실패로 처리
@@ -15,10 +16,7 @@ export const submitInquiry = async (input: IInquiryInput): Promise<void> => {
     memo: '',
     createdAt: serverTimestamp(),
   })
-  const timeout_promise = new Promise<never>((_, reject) => {
-    setTimeout(() => reject(new Error('문의 저장 시간 초과')), SUBMIT_TIMEOUT_MILLISECOND)
-  })
-  await Promise.race([save_promise, timeout_promise])
+  await withTimeout(save_promise, '문의 저장 시간 초과')
   notifyOwner(input)
 }
 
@@ -64,6 +62,9 @@ export const subscribeInquiryList = (onChange: (inquiry_list: IInquiry[]) => voi
 export const updateInquiry = async (inquiry_id: string, changes: { status?: TInquiryStatus; memo?: string }): Promise<void> => {
   await updateDoc(doc(getFirestoreDatabase(), INQUIRY_COLLECTION, inquiry_id), changes)
 }
+
+// 관리자: 선택한 문의 여러 건 삭제
+export const deleteInquiryList = (inquiry_id_list: string[]): Promise<void> => deleteDocumentList(INQUIRY_COLLECTION, inquiry_id_list)
 
 // 관리자: 문의 삭제
 export const deleteInquiry = async (inquiry_id: string): Promise<void> => {

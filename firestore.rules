@@ -3,7 +3,6 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     // 문의: 누구나 작성만 가능(형식 검증), 읽기, 수정, 삭제는 관리자 계정만
-    // 관리자 이메일은 src/constants/siteContent.ts의 ADMIN_LOGIN_EMAIL과 같아야 함
     match /inquiries/{inquiryId} {
       allow create: if request.resource.data.keys().hasOnly(['job', 'name', 'phone', 'account', 'message', 'status', 'memo', 'createdAt'])
         && request.resource.data.job is string && request.resource.data.job.size() <= 60
@@ -15,7 +14,32 @@ service cloud.firestore {
         && request.resource.data.memo == ''
         && request.resource.data.createdAt == request.time;
 
-      allow read, update, delete: if request.auth != null && request.auth.token.email == 'yn8206@gmail.com';
+      allow read, update, delete: if isAdmin();
+    }
+
+    // 설문: 만들기, 수정, 목록은 관리자만. 방문자는 공개 중인 설문 한 건만 읽을 수 있음
+    match /surveys/{surveyId} {
+      allow get: if isAdmin() || resource.data.isActive == true;
+      allow list, create, update, delete: if isAdmin();
+    }
+
+    // 설문 응답: 누구나 공개 중인 설문에 작성만 가능(형식 검증), 읽기와 삭제는 관리자만, 수정 불가
+    match /surveyResponses/{responseId} {
+      allow create: if request.resource.data.keys().hasOnly(['surveyId', 'surveyTitle', 'email', 'answers', 'createdAt'])
+        && request.resource.data.surveyId is string
+        && get(/databases/$(database)/documents/surveys/$(request.resource.data.surveyId)).data.isActive == true
+        && request.resource.data.surveyTitle is string && request.resource.data.surveyTitle.size() <= 200
+        && request.resource.data.email is string && request.resource.data.email.size() <= 200
+        && request.resource.data.email.matches('^[^@ ]+@[^@ ]+\\.[^@ ]+$')
+        && request.resource.data.answers is list && request.resource.data.answers.size() <= 50
+        && request.resource.data.createdAt == request.time;
+
+      allow read, delete: if isAdmin();
+    }
+
+    // 관리자 이메일은 src/constants/siteContent.ts의 ADMIN_LOGIN_EMAIL과 같아야 함
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'yn8206@gmail.com';
     }
   }
 }

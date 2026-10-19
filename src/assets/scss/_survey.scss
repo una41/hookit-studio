@@ -1,0 +1,112 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// 설문 페이지 (/survey/설문번호)
+.bx_survey {
+  min-height: 100vh;
+  padding: $spacing-xl $spacing-md;
+  color: $color-text-dark;
+  background: $color-bg-gray;
+
+  .card_survey {
+    max-width: 560px;
+    padding: $spacing-xl;
+    margin: 0 auto;
+    background: $color-bg-light;
+    border: 1px solid $color-line-light;
+    border-radius: 24px;
+
+    @include responsive(mobile) {
+      padding: $spacing-lg;
+    }
+  }
+
+  .form_survey {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  .tit_survey {
+    font-size: 24px;
+    font-weight: 800;
+  }
+
+  .txt_survey_desc {
+    font-size: $font-size-small;
+    color: $color-text-sub-dark;
+    white-space: pre-wrap;
+  }
+
+  .lab_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    border: 0;
+  }
+
+  .txt_field {
+    padding: 0;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .txt_required,
+  .txt_error {
+    color: $color-danger;
+  }
+
+  .txt_error {
+    font-size: 13px;
+  }
+
+  .ipt_text {
+    @include field-input;
+  }
+
+  textarea.ipt_text {
+    resize: vertical;
+  }
+
+  .list_choice {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  .lab_choice {
+    display: flex;
+    gap: $spacing-xs;
+    align-items: center;
+    font-size: $font-size-small;
+  }
+
+  .ipt_honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .btn {
+    padding: 14px 28px;
+  }
+
+  .bx_survey_message {
+    padding: $spacing-xl 0;
+    text-align: center;
+
+    .tit_message {
+      display: block;
+      margin-bottom: $spacing-xs;
+      font-size: 20px;
+    }
+
+    .txt_message {
+      font-size: $font-size-small;
+      color: $color-text-sub-dark;
+    }
+  }
+}
