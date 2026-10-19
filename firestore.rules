@@ -2,7 +2,7 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    // 문의: 누구나 작성만 가능(형식 검증), 읽기와 수정은 관리자 계정만, 삭제 불가
+    // 문의: 누구나 작성만 가능(형식 검증), 읽기, 수정, 삭제는 관리자 계정만
     // 관리자 이메일은 src/constants/siteContent.ts의 ADMIN_LOGIN_EMAIL과 같아야 함
     match /inquiries/{inquiryId} {
       allow create: if request.resource.data.keys().hasOnly(['job', 'name', 'phone', 'account', 'message', 'status', 'memo', 'createdAt'])
@@ -15,9 +15,7 @@ service cloud.firestore {
         && request.resource.data.memo == ''
         && request.resource.data.createdAt == request.time;
 
-      allow read, update: if request.auth != null && request.auth.token.email == 'admin@hookitstudio.kr';
-
-      allow delete: if false;
+      allow read, update, delete: if request.auth != null && request.auth.token.email == 'yn8206@gmail.com';
     }
   }
 }

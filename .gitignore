@@ -29,3 +29,7 @@ dock
 # Firebase 로컬 캐시
 .firebase
 .firebaserc
+
+# 환경 변수 (비밀값)
+.env
+.env.local
