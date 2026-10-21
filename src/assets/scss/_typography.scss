@@ -28,8 +28,17 @@ body {
     color: $color-primary;
   }
 
+  @include responsive(tablet) {
+    font-size: $font-size-hero-tablet;
+  }
+
   @include responsive(mobile) {
     font-size: $font-size-hero-mobile;
+  }
+
+  // 320px 같은 아주 작은 화면에서 제목이 어색하게 줄바꿈되지 않도록
+  @include responsive(small) {
+    font-size: $font-size-hero-small;
   }
 }
 

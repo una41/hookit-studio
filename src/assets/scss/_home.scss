@@ -186,7 +186,12 @@
     border-radius: 50%;
   }
 
+  // 태블릿은 5칸을 유지하고, 모바일에서만 세로로 쌓음
   @include responsive(tablet) {
+    gap: $spacing-sm;
+  }
+
+  @include responsive(mobile) {
     grid-template-columns: 1fr;
     gap: $spacing-xl;
 
@@ -273,6 +278,18 @@
       border: 1px solid $color-primary;
       border-radius: 50%;
     }
+
+    // 320px 같은 좁은 화면에서는 원과 글자를 줄여 겹치지 않게 함
+    @include responsive(small) {
+      li {
+        font-size: 12px;
+      }
+
+      .num {
+        width: 48px;
+        height: 48px;
+      }
+    }
   }
 }
 
@@ -335,7 +352,7 @@
   border-radius: 50%;
   pointer-events: none;
 
-  @include responsive(mobile) {
+  @include responsive(tablet) {
     display: none;
   }
 }
@@ -399,7 +416,8 @@
   background-image: radial-gradient(rgba($color-text, 0.35) 2px, transparent 2px);
   background-size: 24px 24px;
 
-  @include responsive(mobile) {
+  // 제목과 겹치지 않도록 태블릿 이하에서는 숨김
+  @include responsive(tablet) {
     display: none;
   }
 }

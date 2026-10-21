@@ -33,3 +33,6 @@ dock
 # 환경 변수 (비밀값)
 .env
 .env.local
+
+# 사전 렌더링 중간 결과물
+dist-server

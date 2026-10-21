@@ -8,7 +8,9 @@
 
 @mixin responsive($breakpoint) {
   @if $breakpoint == mobile {
-    @media (max-width: 768px) { @content; }
+    @media (max-width: 767px) { @content; }
+  } @else if $breakpoint == small {
+    @media (max-width: 360px) { @content; }
   } @else if $breakpoint == tablet {
     @media (max-width: 1024px) { @content; }
   }

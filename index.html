@@ -50,6 +50,10 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- 관리자, 설문 주소에서는 미리 만들어 둔 홈 화면이 잠깐 보이지 않도록 비움 -->
+    <script>
+      if (/^\/(admin|survey)/.test(location.pathname)) document.getElementById('root').innerHTML = ''
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
